@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100%;
+            margin-bottom: 2000px;
+        }
+    </style>
+</head>
+<body>
+    <img src="blur/blur1.png" data-src="none1.jpg" alt="" class="blur">
+    <img src="blur/blur2.png" data-src="none2.jpg" alt="" class="blur">
+    <img src="blur/blur3.png" data-src="none3.jpg" alt="" class="blur">
+    <img src="blur/blur4.png" data-src="none4.jpg" alt="" class="blur">
+    <img src="blur/blur5.png" data-src="none5.jpg" alt="" class="blur">
+</body>
+<script>
+    let lazyArray = Array.from(document.querySelectorAll(".blur"))
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener("scroll", lazyLoad)
+    })
+    function lazyLoad() {
+        for (let lazy of lazyArray) {
+            console.log(lazy)
+            if (lazy.getBoundingClientRect().y <= window.innerHeight){
+                let data=lazy.getAttribute('data-src')
+                lazy.setAttribute('src', data)
+                if (lazy==lazyArray[0]) {
+                    lazyArray.shift
+                }
+            }
+        }
+        console.log('Done!')
+        if(lazyArray.length==0){
+            document.removeEventListener("scroll", lazyLoad)
+        }
+    }
+</script>
+</html>
